@@ -1,53 +1,57 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:set_flutter/app/StyleConstants.dart';
 import 'package:set_flutter/app/application.dart';
 import 'package:set_flutter/app/translations.dart';
-import 'package:set_flutter/test/ButtonTest.dart';
-import 'package:set_flutter/test/ContainerTest.dart';
-import 'package:set_flutter/test/HtmlWidget.dart';
+import 'package:set_flutter/pages/JobMainPage.dart';
+
 import 'package:set_flutter/test/NewStaticRoute.dart';
 import 'package:set_flutter/pages/MainPage.dart';
 import 'package:set_flutter/pages/login/LoginPage.dart';
 import 'package:set_flutter/pages/SplashPage.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+
+import 'package:set_flutter/test/ButtonTest.dart';
+import 'package:set_flutter/test/ContainerTest.dart';
+import 'package:set_flutter/test/HtmlWidget.dart';
+import 'package:set_flutter/test/ProgressNetworkPage.dart';
 import 'package:set_flutter/test/ScreenUtilTest.dart';
 import 'package:set_flutter/test/TagTest.dart';
 import 'package:set_flutter/test/TagsTest.dart';
 
-//void main() => runApp(MyApp());
-
-void collectLog(String line) {
-  //收集日志
-}
-
-void reportErrorAndLog(FlutterErrorDetails details) {
-  //上报错误和日志逻辑
-}
-
-FlutterErrorDetails makeDetails(Object obj, StackTrace stack) {
-  // 构建错误信息
-  return null;
-}
-
-void main() {
-  FlutterError.onError = (FlutterErrorDetails details) {
-    reportErrorAndLog(details);
-  };
-  runZoned(
-    () => runApp(MyApp()),
-    zoneSpecification: ZoneSpecification(
-      print: (Zone self, ZoneDelegate parent, Zone zone, String line) {
-        collectLog(line); //手机日志
-      },
-    ),
-    onError: (Object obj, StackTrace stack) {
-      var details = makeDetails(obj, stack);
-      reportErrorAndLog(details);
-    },
-  );
-}
-
+void main() => runApp(MyApp());
+const int ThemeColor = AppColor.primary_0;
+//void collectLog(String line) {
+//  //收集日志
+//}
+//
+//void reportErrorAndLog(FlutterErrorDetails details) {
+//  //上报错误和日志逻辑
+//}
+//
+//FlutterErrorDetails makeDetails(Object obj, StackTrace stack) {
+//  // 构建错误信息
+//  return null;
+//}
+//
+//void main() {
+//  FlutterError.onError = (FlutterErrorDetails details) {
+//    reportErrorAndLog(details);
+//  };
+//  runZoned(
+//    () => runApp(MyApp()),
+//    zoneSpecification: ZoneSpecification(
+//      print: (Zone self, ZoneDelegate parent, Zone zone, String line) {
+//        collectLog(line); //手机日志
+//      },
+//    ),
+//    onError: (Object obj, StackTrace stack) {
+//      var details = makeDetails(obj, stack);
+//      reportErrorAndLog(details);
+//    },
+//  );
+//}
 
 class MyApp extends StatefulWidget {
   @override
@@ -82,9 +86,21 @@ class _MyAppState extends State<MyApp> {
       // App名字
       title: 'Hugh Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: Color(ThemeColor),
+        primaryColorDark: Color(AppColor.primary_1),
+        backgroundColor: Color(AppColor.background),
+        accentColor: Color(ThemeColor),
+        textTheme: TextTheme(
+          //设置Material的默认字体样式
+          body1: TextStyle(
+              color: Color(AppColor.mainTextColor),
+              fontSize: AppSize.TEXT_NORMAL),
+        ),
+        iconTheme: IconThemeData(
+          color: Color(ThemeColor),
+          size: AppSize.ICON_NORMAL,
+        ),
       ),
-
 
       localizationsDelegates: [
         _localeOverrideDelegate, // 注册一个新的delegate
@@ -97,12 +113,15 @@ class _MyAppState extends State<MyApp> {
       //注册路由表
       routes: {
         "splash":(context) =>SplashPage(),
-        "login": (context) => LoginPage(),
+        "login": (context) => ProgressNetworkPage(),
+//        "login": (context) => LoginPage(),
         "new_page": (context) => NewStaticRoute(),
-        "main_page": (context) => MainPage('111'),
+//        "main_page": (context) => MainPage('111'),
+        "main_page": (context) => JobMainPage('111'),
       },
 //      home: OfficialDemo(title: 'HughShi Demo Home Page'),
-      home: new HtmlWidget(),
+//      home: new HtmlWidget(),
+      home: new SplashPage(),
     );
   }
 }
